@@ -31,6 +31,7 @@ pipeline {
             dir("${WORKSPACE}") {
                 archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
             }
+            cleanWs()
         }
     }
 }
