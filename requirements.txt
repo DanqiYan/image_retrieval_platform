@@ -13,3 +13,6 @@ pycparser
 torch
 Werkzeug
 flake8
+pre-commit
+black
+isort
