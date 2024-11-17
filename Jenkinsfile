@@ -12,7 +12,7 @@ pipeline {
         stage('Setup Python Environment') {
             steps {
                 dir("${WORKSPACE}") {
-                    sh 'python3 -m venv image_retrieval'
+                    sh '/Users/emmayan/miniconda3/bin/python3 -m venv image_retrieval'
                     sh './image_retrieval/bin/pip install --upgrade pip'
                     sh './image_retrieval/bin/pip install -r requirements.txt'
                 }
