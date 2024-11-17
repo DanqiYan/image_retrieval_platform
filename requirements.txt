@@ -1,10 +1,10 @@
-certifi==2019.3.9
-cffi==1.12.3
-Click==7.0
-Flask==1.0.3
-itsdangerous==1.1.0
-Jinja2==2.10.1
-MarkupSafe==1.1.1
+certifi
+cffi
+Click
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
 # mkl-fft
 # mkl-random
 numpy
