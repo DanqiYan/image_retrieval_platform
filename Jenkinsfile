@@ -33,7 +33,7 @@ pipeline {
                         if [ -n "$(git status --porcelain)" ]; then
                             git add .
                             git commit -m "Auto-format code with black and isort"
-                            git push origin HEAD
+                            git push origin $CURRENT_BRANCH
                         fi
                         '''
                     }
