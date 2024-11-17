@@ -21,11 +21,23 @@ pipeline {
         stage('Run Pre-commit Checks') {
             steps {
                 dir("${WORKSPACE}") {
-                    // 运行 pre-commit 检查，包含 black 和 isort
-                    sh './image_retrieval/bin/pre-commit run --all-files'
+                    // 运行 pre-commit
+                    sh './image_retrieval/bin/pre-commit run --all-files || true'
+                    // 提交自动修复的更改
+                    sh '''
+                    if [ -n "$(git status --porcelain)" ]; then
+                        git config user.name "Jenkins"
+                        git config user.email "jenkins@example.com"
+                        git add .
+                        git commit -m "Auto-format code with black and isort"
+                    fi
+                    '''
+                    // 再次运行 flake8 检查，确保格式修复后代码符合 PEP8
+                    sh './image_retrieval/bin/flake8 . --exclude=image_retrieval --count --show-source --statistics'
                 }
             }
         }
+
         stage('Run Linting (PEP8)') {
             steps {
                 dir("${WORKSPACE}") {
