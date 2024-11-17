@@ -21,19 +21,22 @@ pipeline {
         stage('Run Pre-commit Checks') {
             steps {
                 dir("${WORKSPACE}") {
-                    // 运行 pre-commit
-                    sh './image_retrieval/bin/pre-commit run --all-files || true'
-                    // 提交自动修复的更改
-                    sh '''
-                    if [ -n "$(git status --porcelain)" ]; then
+                    withCredentials([usernamePassword(credentialsId: 'GitHub-token', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        // 设置 Git 用户信息和远程仓库 URL
+                        sh '''
                         git config user.name "Jenkins"
                         git config user.email "jenkins@example.com"
-                        git add .
-                        git commit -m "Auto-format code with black and isort"
-                    fi
-                    '''
-                    // 再次运行 flake8 检查，确保格式修复后代码符合 PEP8
-                    sh './image_retrieval/bin/flake8 . --exclude=image_retrieval --count --show-source --statistics'
+                        git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/your-org/your-repo.git
+                        '''
+                        // 提交并推送更改
+                        sh '''
+                        if [ -n "$(git status --porcelain)" ]; then
+                            git add .
+                            git commit -m "Auto-format code with black and isort"
+                            git push origin HEAD
+                        fi
+                        '''
+                    }
                 }
             }
         }
