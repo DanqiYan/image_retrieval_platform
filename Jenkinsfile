@@ -21,7 +21,7 @@ pipeline {
         stage('Run Linting (PEP8)') {
             steps {
                 dir("${WORKSPACE}") {
-                    sh './image_retrieval/bin/flake8 . --count --show-source --statistics'
+                    sh './image_retrieval/bin/flake8 . --exclude=image_retrieval --count --show-source --statistics'
                 }
             }
         }
