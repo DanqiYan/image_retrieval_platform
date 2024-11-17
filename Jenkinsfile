@@ -26,7 +26,7 @@ pipeline {
                         sh '''
                         git config user.name "Jenkins"
                         git config user.email "jenkins@example.com"
-                        git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/your-org/your-repo.git
+                        git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/DanqiYan/image_retrieval_platform.git
                         '''
                         // 提交并推送更改
                         sh '''
